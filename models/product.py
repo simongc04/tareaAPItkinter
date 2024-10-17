@@ -1,6 +1,8 @@
-from models import review
+from typing import List
+
+from models.review import Review
 from models.dimensions import Dimensions
-from models import meta
+from models.meta import Meta
 from dataclasses import dataclass
 
 
@@ -23,7 +25,7 @@ class Product:
         warrantyInformation : str
         shippingInformation : str
         availabilityStatus : str
-        reviews : [review]
+        reviews : List[Review]
         returnPolicy : str
         minimumOrderQuantity : int
         meta : Meta

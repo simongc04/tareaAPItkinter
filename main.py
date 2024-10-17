@@ -6,7 +6,7 @@ from models import APIResponse
 
 response = requests.get("https://dummyjson.com/products")
 data_dict = response.json()
-data_obj = fromdict(APIresponsave, data_dict)
+data_obj = fromdict(APIResponse, data_dict)
 print(data_obj.total)
 
 
