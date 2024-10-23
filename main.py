@@ -1,5 +1,4 @@
 from itertools import product
-
 import requests
 from dataclass_wizard import fromdict
 from models.APIResponse import APIResponse
@@ -8,11 +7,11 @@ from vistas import ProductViewer
 
 
 def main():
-    response = requests.get("https://dummyjson.com/products")
-    data_dict = response.json()
-    product_list = fromdict(APIResponse, data_dict)
+    respuesta = requests.get("https://dummyjson.com/products")
+    datos_dict = respuesta.json()
+    lista_productos = fromdict(APIResponse, datos_dict)
 
-    viewer = ProductViewer(product_list.products)
+    visor = ProductViewer(lista_productos.products)
 
 
 main()
