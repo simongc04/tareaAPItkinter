@@ -9,3 +9,4 @@ class Review:
     date : str
     reviewerName : str
     reviewerEmail : str
+

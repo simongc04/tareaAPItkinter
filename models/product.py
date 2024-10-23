@@ -18,7 +18,6 @@ class Product:
         rating : int
         stock : int
         tags : str
-        brand : str
         sku : str
         weight : int
         dimensions : Dimensions
@@ -31,3 +30,4 @@ class Product:
         meta : Meta
         images : str
         thumbnail : str
+        brand : str = None
