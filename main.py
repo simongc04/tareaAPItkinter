@@ -11,6 +11,7 @@ def main():
     datos_dict = respuesta.json()
     lista_productos = fromdict(APIResponse, datos_dict)
 
+
     visor = ProductViewer(lista_productos.products)
 
 
