@@ -106,3 +106,4 @@ class ProductViewer:
         ventana_busqueda = tk.Toplevel(self.root)
         ventana_busqueda.title("Buscar Producto")
         ventana_busqueda.geometry("300x200")
+
