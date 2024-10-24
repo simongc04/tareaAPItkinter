@@ -24,16 +24,14 @@ class ProductViewer:
         self.titulo = ttk.Label(self.root, font=("Arial", 22), background="purple", foreground="white")
         self.titulo.pack(pady=0)
 
-
         # Buscador
         self.buscador = tk.Frame(self.root, bg="purple")
         self.buscador.pack(side="top", pady=10)
 
         self.entry_buscar = ttk.Entry(self.buscador)
         self.entry_buscar.pack(side="left")
-        self.btn_buscar = ttk.Button(self.buscador, text="Buscar",)
+        self.btn_buscar = ttk.Button(self.buscador, text="Buscar", command=self.abrir_ventana_busqueda)
         self.btn_buscar.pack(side="left", padx=10)
-
 
         # Categoría del producto
         self.categoria = ttk.Label(self.root, font=("Arial", 14), background="purple", foreground="white")
@@ -48,14 +46,14 @@ class ProductViewer:
         self.imagen.pack(pady=5)
 
         # Descripción del producto
-        self.descripcion = ttk.Label(self.root, text="Descripción:", font=("Arial", 16), background="purple", foreground="white")
+        self.descripcion = ttk.Label(self.root, text="Descripción:", font=("Arial", 16), background="purple",foreground="white")
         self.descripcion.pack(pady=5)
 
         self.descripcion_texto = ttk.Label(self.root, background="purple", foreground="white", wraplength=400)
         self.descripcion_texto.pack(pady=5)
 
         # Comentarios del producto
-        self.comentarios = ttk.Label(self.root, text="Comentarios:", font=("Arial", 16), background="purple", foreground="white")
+        self.comentarios = ttk.Label(self.root, text="Comentarios:", font=("Arial", 16), background="purple",foreground="white")
         self.comentarios.pack(pady=20)
 
         self.marco_comentarios = tk.Frame(self.root, bg="purple")
@@ -68,7 +66,7 @@ class ProductViewer:
         self.btn_siguiente = ttk.Button(self.root, text="Siguiente", command=self.mostrar_siguiente_producto)
         self.btn_siguiente.pack(side=tk.RIGHT, padx=20, pady=20)
 
-        # Buscador
+
 
     def mostrar_productos(self):
         producto = self.productos[self.indice_actual]
@@ -106,3 +104,7 @@ class ProductViewer:
             self.indice_actual -= 1
             self.mostrar_productos()
 
+    def abrir_ventana_busqueda(self):
+        ventana_busqueda = tk.Toplevel(self.root)
+        ventana_busqueda.title("Buscar Producto")
+        ventana_busqueda.geometry("300x200")
