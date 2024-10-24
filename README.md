@@ -6,4 +6,4 @@ El programa permite a los usuarios navegar a través de una lista de productos, 
 La interfaz es sencilla y visualmente atractiva, con un diseño de color púrpura y texto en blanco.
 Tienes una barra de navegacion con un boton de buscar con el que puede buscar los productos disponibles
 
-![image](https://github.com/user-attachments/assets/02f95975-8330-4a66-bfb9-f2474c579e04)
+![image](https://github.com/user-attachments/assets/849d0728-9b37-4433-ad4c-30f375416515)
