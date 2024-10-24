@@ -93,13 +93,11 @@ class ProductViewer:
             etiqueta_comentario.pack(padx=10)
 
     def mostrar_siguiente_producto(self):
-        # Cambia al siguiente producto si hay más
         if self.indice_actual < len(self.productos) - 1:
             self.indice_actual += 1
             self.mostrar_productos()
 
     def mostrar_producto_anterior(self):
-        # Cambia al producto anterior si hay más
         if self.indice_actual > 0:
             self.indice_actual -= 1
             self.mostrar_productos()
