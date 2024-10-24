@@ -1,16 +1,18 @@
+from typing import List
+
+from models.APIResponse import APIResponse
 from models.product import Product
 import tkinter as tk
+from tkinter import ttk
 from PIL import Image, ImageTk
 import requests
-from io import BytesIO
 
 class ProductViewer:
     def __init__(self, productos):
-        self.productos = productos
+        self.productos: List[Product] = productos
         self.indice_actual = 0
         self.root = tk.Tk()
         self.root.title("Producto Simon")
-        self.root.geometry("512x512")
         self.root.config(bg="purple")
 
         self.crear_widgets()
@@ -19,37 +21,54 @@ class ProductViewer:
 
     def crear_widgets(self):
         # Título del producto
-        self.titulo = tk.Label(self.root, font=("Arial", 22), bg="purple", fg="white")
+        self.titulo = ttk.Label(self.root, font=("Arial", 22), background="purple", foreground="white")
         self.titulo.pack(pady=0)
 
+
+        # Buscador
+        self.buscador = tk.Frame(self.root, bg="purple")
+        self.buscador.pack(side="top", pady=10)
+
+        self.entry_buscar = ttk.Entry(self.buscador)
+        self.entry_buscar.pack(side="left")
+        self.btn_buscar = ttk.Button(self.buscador, text="Buscar",)
+        self.btn_buscar.pack(side="left", padx=10)
+
+
         # Categoría del producto
-        self.categoria = tk.Label(self.root, font=("Arial", 14), bg="purple", fg="white")
+        self.categoria = ttk.Label(self.root, font=("Arial", 14), background="purple", foreground="white")
         self.categoria.pack(pady=0)
 
         # Precio del producto
-        self.precio = tk.Label(self.root, font=("Arial", 14), bg="purple", fg="white")
+        self.precio = ttk.Label(self.root, font=("Arial", 14), background="purple", foreground="white")
         self.precio.pack(pady=20)
 
+        # Cargamos imagen
+        self.imagen = ttk.Label(self.root, background="purple")
+        self.imagen.pack(pady=5)
+
         # Descripción del producto
-        self.descripcion = tk.Label(self.root, text="Descripción:", font=("Arial", 16), bg="purple", fg="white")
+        self.descripcion = ttk.Label(self.root, text="Descripción:", font=("Arial", 16), background="purple", foreground="white")
         self.descripcion.pack(pady=5)
 
-        self.descripcion_texto = tk.Label(self.root, bg="purple", fg="white", wraplength=400)
+        self.descripcion_texto = ttk.Label(self.root, background="purple", foreground="white", wraplength=400)
         self.descripcion_texto.pack(pady=5)
 
         # Comentarios del producto
-        self.comentarios = tk.Label(self.root, text="Comentarios:", font=("Arial", 16), bg="purple", fg="white")
+        self.comentarios = ttk.Label(self.root, text="Comentarios:", font=("Arial", 16), background="purple", foreground="white")
         self.comentarios.pack(pady=20)
 
         self.marco_comentarios = tk.Frame(self.root, bg="purple")
         self.marco_comentarios.pack()
 
         # Botones para navegar entre productos
-        self.btn_anterior = tk.Button(self.root, text="Anterior", command=self.mostrar_producto_anterior)
+        self.btn_anterior = ttk.Button(self.root, text="Anterior", command=self.mostrar_producto_anterior)
         self.btn_anterior.pack(side=tk.LEFT, padx=20, pady=20)
 
-        self.btn_siguiente = tk.Button(self.root, text="Siguiente", command=self.mostrar_siguiente_producto)
+        self.btn_siguiente = ttk.Button(self.root, text="Siguiente", command=self.mostrar_siguiente_producto)
         self.btn_siguiente.pack(side=tk.RIGHT, padx=20, pady=20)
+
+        # Buscador
 
     def mostrar_productos(self):
         producto = self.productos[self.indice_actual]
@@ -60,23 +79,30 @@ class ProductViewer:
         self.descripcion_texto.config(text=producto.description)
         self.categoria.config(text=f"Categoría: {producto.category}")
 
+        imagen_raw = requests.get(producto.thumbnail, stream=True).raw
+        imagen_foto = Image.open(imagen_raw).resize((128, 128))
+        imagen_tk = ImageTk.PhotoImage(imagen_foto)
+        self.imagen.image = imagen_tk
+        self.imagen.config(image=imagen_tk)
+
         # Limpia comentarios anteriores
         for widget in self.marco_comentarios.winfo_children():
             widget.destroy()
 
         # Muestra comentarios del producto
         for comentario in producto.reviews:
-            etiqueta_comentario = tk.Label(self.marco_comentarios, text=f"- {comentario.comment}", bg="purple", fg="white", wraplength=400)
+            etiqueta_comentario = ttk.Label(self.marco_comentarios, text=f"- {comentario.comment}", background="purple", foreground="white", wraplength=400)
             etiqueta_comentario.pack(padx=10)
 
     def mostrar_siguiente_producto(self):
-        # Cambia al siguiente producto
+        # Cambia al siguiente producto si hay más
         if self.indice_actual < len(self.productos) - 1:
             self.indice_actual += 1
             self.mostrar_productos()
 
     def mostrar_producto_anterior(self):
-        # Cambia al producto anterior
+        # Cambia al producto anterior si hay más
         if self.indice_actual > 0:
             self.indice_actual -= 1
             self.mostrar_productos()
+
