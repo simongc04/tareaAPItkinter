@@ -69,7 +69,7 @@ class ProductViewer:
 
         # Estilo de botones
         style = ttk.Style()
-        style.configure("TButton", padding=6, background="Red", font=("Arial", 12, "bold"))
+        style.configure("TButton", padding=1, background="Red", font=("Arial", 12, "bold"))
 
     def mostrar_productos(self):
         producto = self.productos[self.indice_actual]
@@ -106,6 +106,33 @@ class ProductViewer:
             self.mostrar_productos()
 
     def abrir_ventana_busqueda(self):
+        # Crear la ventana de resultados de búsqueda
         ventana_busqueda = tk.Toplevel(self.root)
-        ventana_busqueda.title("Buscar Producto")
-        ventana_busqueda.geometry("300x200")
+        ventana_busqueda.title("Resultados de Búsqueda")
+        ventana_busqueda.geometry("400x900")
+        ventana_busqueda.config(bg="black" )
+
+        # mostrar los resultados
+        resultados_frame = tk.Frame(ventana_busqueda, bg="black")
+        resultados_frame.pack(fill="both", expand=True)
+
+        # Que salga el texto de búsqueda de la barra de búsqueda
+        texto_busqueda = self.entry_buscar.get().lower()
+
+        # Filtrar los productos que empiecen con la letra que se haya puesto
+        resultados = [p for p in self.productos if p.title.lower().startswith(texto_busqueda)]
+
+        # Mostrar resultados
+        if resultados:
+            for producto in resultados:
+                btn_producto = ttk.Button(resultados_frame,  text=producto.title, command=lambda p=producto: p)
+                btn_producto.pack(fill="x", pady=1, )
+
+
+        btn_descargar_pdf = ttk.Button(ventana_busqueda, text="Descargar PDF")
+        btn_descargar_pdf.pack(pady=10)
+
+
+
+
+
